@@ -2,13 +2,13 @@
 
 > XHR based client for json-lines streaming
 
-# Installation
-```
-npm install git+ssh://git@github.houston.softwaregrp.net:andreas-weber/jl-client.git
-```
+## Installation
 
-# Usage
-```
+`npm install git+ssh://git@github.com:twittwer/jl-client.git`
+
+## Usage
+
+```javascript
 const jlClient = require('jl-client');
 
 const requestConfig = {
@@ -35,13 +35,15 @@ jlClient.connect(requestConfig)
     });
 ```
 
-# Reference
+## Reference
+
 > required **parameters** are written bold  
-> optional *parameters* are written italic or marked with `[`square brackets`]`  
+> optional *parameters* are written italic or marked with `[`square brackets`]`
 
-## Methods
+### Methods
 
-### jlClient.connect(requestConfig, [moduleConfig]): Promise
+#### jlClient.connect(requestConfig, [moduleConfig]): Promise
+
 Creates XHR to start HTTP streaming based on request configuration.
 
 | Param             | Type            | Sample                              | Description                       |
@@ -50,10 +52,10 @@ Creates XHR to start HTTP streaming based on request configuration.
 | *moduleConfig*    | `moduleConfig`  | `{ 'connectionTimeoutInMS': 5000 }` | configuration of request handling |
 
 **Resolves** with connected server instance (`.then(server => {...})`)  
-**Rejects** in cases of a failed connection attempt (`.catch(error => {...})`)  
+**Rejects** in cases of a failed connection attempt (`.catch(error => {...})`)
 
+#### server.on(eventName, eventHandler): void
 
-### server.on(eventName, eventHandler): void
 Registers handler/callback functions for events (`data`, `disconnect`).  
 Internally there are more events emitted (`heartbeat`, `responseLength`), but they are for administrative tasks only.
 
@@ -72,7 +74,8 @@ Internally there are more events emitted (`heartbeat`, `responseLength`), but th
 
 > *) executes just once
 
-### server.removeListener(eventName, eventHandler): void
+#### server.removeListener(eventName, eventHandler): void
+
 Removes listeners from prior event registration (`server.on(...)`).
 
 | Param            | Type       |
@@ -80,17 +83,19 @@ Removes listeners from prior event registration (`server.on(...)`).
 | **eventName**    | `string`   |
 | **eventHandler** | `function` |
 
-### server.isIdle(): boolean
+#### server.isIdle(): boolean
+
 Checks if any partial objects are waiting for incoming chunk to become a complete JSON object.
 
 **Returns** if the response pointer is set on the end of all received data.
 
-### server.disconnect(): void
+#### server.disconnect(): void
+
 Closes server connection.
 
-## Custom Type Definitions
+### Custom Type Definitions
 
-### `requestConfig` - Request Configuration
+#### `requestConfig` - Request Configuration
 
 | Param     | Type      | Sample                                | Description                             |
 | --------- | --------- | ------------------------------------- | --------------------------------------- |
@@ -101,10 +106,10 @@ Closes server connection.
 | *headers* | `object`  | `{ 'Authorization': 'Basic abc123' }` | map of http headers and their values    |
 | *query*   | `object`  | `{ 'lastEvent': '1505077200' }`       | map of url query params and their value |
 | *body*    | `object`  | `{ 'subjects': ['news','weather'] }`  | http body (json only)                   |
-  
-> *) as default `ssl`, `host`, `port` will be defined by current domain  
 
-### `moduleConfig` - Module Configuration
+> *) as default `ssl`, `host`, `port` will be defined by current domain
+
+#### `moduleConfig` - Module Configuration
 
 | Param                   | Type        | Default        | Description                                                                     |
 | ----------------------- | ----------- | -------------- | ------------------------------------------------------------------------------- |
